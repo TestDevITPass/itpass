@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="iパスメモラ" />
+  <meta name="theme-color" content="#0c0c0e" />
+  <title>iパスメモラ — ITパスポート用語</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon-180.svg" />
+  <link rel="icon" href="./icons/icon-180.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- HOME -->
+    <section class="screen active" id="screen-home">
+      <div class="topbar">
+        <div class="brand">iパス<span>メモラ</span></div>
+        <button class="icon-btn" id="btn-settings" aria-label="設定">⚙</button>
+      </div>
+      <div class="hero">
+        <h1>忘れる前提で、<br>用語を潰す。</h1>
+        <p>Memora X のスワイプ学習を、ITパスポートの頻出用語向けに再構成したホーム画面アプリです。</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="stat-mastered">0</b><span>覚えた</span></div>
+        <div class="stat"><b id="stat-weak">0</b><span>苦手</span></div>
+        <div class="stat"><b id="stat-streak">0</b><span>連続日</span></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span id="prog-sub">0 / 0 語に接触</span><span id="prog-num">0%</span></div>
+        <div class="bar"><i id="prog-bar"></i></div>
+      </div>
+      <div class="fields">
+        <button class="chip on" data-field="ストラテジ">ストラテジ</button>
+        <button class="chip on" data-field="マネジメント">マネジメント</button>
+        <button class="chip on" data-field="テクノロジ">テクノロジ</button>
+      </div>
+      <div class="modes">
+        <button class="mode" id="mode-review">
+          <div class="num">01</div>
+          <div class="body"><strong>前回の復習</strong><small>自信がなかった語をもう一度</small></div>
+          <div class="meta"><b id="review-n">0</b>語</div>
+        </button>
+        <button class="mode" id="mode-skim">
+          <div class="num">02</div>
+          <div class="body"><strong>スキミング</strong><small>重要度の高い未接触語を流す</small></div>
+          <div class="meta"><b id="skim-n">0</b>語</div>
+        </button>
+        <button class="mode" id="mode-weak">
+          <div class="num">03</div>
+          <div class="body"><strong>苦手な用語</strong><small>2回連続で覚えるまで残す</small></div>
+          <div class="meta"><b id="weak-n">0</b>語</div>
+        </button>
+        <button class="mode" id="mode-drill">
+          <div class="num">04</div>
+          <div class="body"><strong>徹底暗記</strong><small>間違えた語を数問後に再出題</small></div>
+          <div class="meta"><b id="drill-n">0</b>語</div>
+        </button>
+      </div>
+      <div class="hint">今日 <span id="today-ans">0</span> 問 · Safari なら「ホーム画面に追加」できます</div>
+    </section>
+
+    <!-- STUDY -->
+    <section class="screen" id="screen-study">
+      <div class="study-top">
+        <button class="back" id="btn-back">←</button>
+        <div class="study-title" id="study-title">学習</div>
+        <div class="counter" id="counter">1 / 10</div>
+      </div>
+      <div class="track"><i id="track-bar"></i></div>
+      <div class="stage">
+        <div class="swipe-hint left" id="hint-left">苦手</div>
+        <div class="swipe-hint right" id="hint-right">覚えた</div>
+        <article class="card" id="card">
+          <div class="badge-row">
+            <span class="badge" id="badge">テクノロジ</span>
+            <span class="imp" id="imp">重要度 90%</span>
+          </div>
+          <div class="term-wrap">
+            <div class="term" id="term">CPU</div>
+            <div class="reading" id="reading"></div>
+            <div class="cat" id="cat"></div>
+            <div class="answer" id="answer">
+              <div class="def" id="def"></div>
+              <div class="tip" id="tip"></div>
+              <button class="pair-btn" id="pair-btn" type="button"></button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="guide" id="guide">カードをタップして意味を表示</div>
+      <div class="actions hidden" id="actions">
+        <button class="btn weak" id="btn-weak">← 苦手</button>
+        <button class="btn good" id="btn-good">覚えた →</button>
+      </div>
+      <div class="overlay" id="overlay">
+        <div class="sheet">
+          <h3>まぎらわしい用語</h3>
+          <div class="compare">
+            <div class="box"><b id="cmp-a-t"></b><p id="cmp-a-d"></p></div>
+            <div class="box"><b id="cmp-b-t"></b><p id="cmp-b-d"></p></div>
+          </div>
+          <button class="btn ghost close" id="btn-close-cmp">閉じる</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DONE -->
+    <section class="screen" id="screen-done">
+      <div class="done" style="margin-top:auto;margin-bottom:auto;">
+        <h2>おつかれさま。</h2>
+        <p>このセットはここまで。</p>
+        <div class="done-nums">
+          <div><b id="done-known">0</b><span>覚えた</span></div>
+          <div><b id="done-weak">0</b><span>苦手</span></div>
+          <div><b id="done-total">0</b><span>出題</span></div>
+        </div>
+        <button class="btn good" id="btn-done-home" style="width:min(280px,80%);">ホームへ</button>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="screen" id="screen-settings">
+      <div class="study-top">
+        <button class="back" id="btn-set-back">←</button>
+        <div class="study-title">設定</div>
+        <div class="counter"></div>
+      </div>
+      <div class="panel">
+        <div class="row" id="open-weak" style="cursor:pointer"><span>苦手リスト</span><span>›</span></div>
+        <div class="row" id="open-mastered" style="cursor:pointer"><span>覚えた用語</span><span>›</span></div>
+        <div class="row" id="open-all" style="cursor:pointer"><span>用語一覧</span><span>›</span></div>
+        <div class="row" style="color:var(--muted);font-size:12px;border:0;padding-top:22px">データは端末の中だけに保存されます。アカウント不要・広告なし。</div>
+        <div class="row" id="reset-data" style="cursor:pointer;color:var(--weak)"><span>学習データをリセット</span></div>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section class="screen" id="screen-list">
+      <div class="study-top">
+        <button class="back" id="btn-list-back">←</button>
+        <div class="study-title" id="list-title">一覧</div>
+        <div class="counter"></div>
+      </div>
+      <div class="panel" id="list-body"></div>
+    </section>
+  </div>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
