@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <rect width="180" height="180" rx="40" fill="#0c0c0e"/>
+  <rect x="28" y="36" width="124" height="108" rx="18" fill="#1c1c21" stroke="#e8c07a" stroke-width="3"/>
+  <text x="90" y="92" text-anchor="middle" font-family="Hiragino Sans, sans-serif" font-size="28" font-weight="700" fill="#f4f2ee">iパス</text>
+  <text x="90" y="118" text-anchor="middle" font-family="Hiragino Sans, sans-serif" font-size="16" fill="#e8c07a">メモラ</text>
+</svg>
