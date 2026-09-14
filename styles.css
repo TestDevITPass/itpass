@@ -31,6 +31,12 @@ body {
 /* screens */
 .screen { display: none; flex-direction: column; height: 100%; min-height: 0; }
 .screen.active { display: flex; }
+#screen-home {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+#panel-vocab, #panel-kakomon { min-height: min-content; }
 
 /* home */
 .topbar {
@@ -64,7 +70,7 @@ body {
 .bar { height: 6px; background: #2a2a30; border-radius: 99px; overflow: hidden; }
 .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #c9a56a, var(--accent)); border-radius: 99px; transition: width .4s ease; }
 
-.modes { padding: 0 16px 12px; display: flex; flex-direction: column; gap: 10px; overflow: auto; flex: 1; }
+.modes { padding: 0 16px 12px; display: flex; flex-direction: column; gap: 10px; overflow: visible; flex: none; }
 .mode {
   background: var(--card); border: 1px solid var(--line);
   border-radius: 18px; padding: 16px 16px 16px 18px;
@@ -210,7 +216,7 @@ body {
 .list-item .s { font-size: 12px; color: var(--muted); }
 .tag { font-size: 10px; color: var(--weak); }
 
-.quiz-body { padding: 8px 16px calc(20px + var(--safeb)); overflow: auto; flex: 1; }
+.quiz-body { padding: 8px 16px calc(20px + var(--safeb)); overflow: auto; flex: 1; min-height: 0; -webkit-overflow-scrolling: touch; }
 .quiz-q { font-size: 20px; font-weight: 700; line-height: 1.4; margin: 10px 0 16px; }
 .choices { display: flex; flex-direction: column; gap: 8px; }
 .choice {
