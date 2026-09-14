@@ -60,6 +60,11 @@
           <div class="body"><strong>徹底暗記</strong><small>間違えた語を数問後に再出題</small></div>
           <div class="meta"><b id="drill-n">0</b>語</div>
         </button>
+        <button class="mode" id="mode-quiz">
+          <div class="num">05</div>
+          <div class="body"><strong>四肢択一</strong><small>用語の意味を4つから選ぶ</small></div>
+          <div class="meta"><b id="quiz-n">10</b>問</div>
+        </button>
       </div>
       <div class="hint">今日 <span id="today-ans">0</span> 問 · Safari なら「ホーム画面に追加」できます</div>
     </section>
@@ -148,8 +153,28 @@
       </div>
       <div class="panel" id="list-body"></div>
     </section>
+    <!-- QUIZ -->
+    <section class="screen" id="screen-quiz">
+      <div class="study-top">
+        <button class="back" id="btn-quiz-back">←</button>
+        <div class="study-title" id="quiz-title">四肢択一</div>
+        <div class="counter" id="quiz-counter">1 / 10</div>
+      </div>
+      <div class="track"><i id="quiz-track"></i></div>
+      <div class="quiz-body">
+        <div class="badge-row" style="padding: 12px 4px 0;">
+          <span class="badge" id="quiz-badge">テクノロジ</span>
+          <span class="imp" id="quiz-imp"></span>
+        </div>
+        <p class="quiz-q" id="quiz-q"></p>
+        <div class="choices" id="quiz-choices"></div>
+        <p class="quiz-explain" id="quiz-explain"></p>
+        <button class="btn good" id="quiz-next" style="display:none;width:100%;margin-top:12px;">次へ</button>
+      </div>
+    </section>
   </div>
   <script src="./data.js"></script>
+  <script src="./data-extra.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

@@ -132,6 +132,7 @@
     $("skim-n").textContent = skimQueue().length;
     $("weak-n").textContent = weakQueue().length;
     $("drill-n").textContent = drillQueue().length;
+    if ($("quiz-n")) $("quiz-n").textContent = Math.min(10, enabledTerms().length);
     $("mode-review").classList.toggle("disabled", reviewQueue().length === 0);
     $("mode-weak").classList.toggle("disabled", weakQueue().length === 0);
     $("mode-drill").classList.toggle("disabled", drillQueue().length < 1);
@@ -264,6 +265,107 @@
     renderHome();
   }
 
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let quiz = null;
+
+  function startQuiz() {
+    const pool = enabledTerms();
+    if (pool.length < 4) return;
+    const n = Math.min(10, pool.length);
+    const picked = shuffle(pool).slice(0, n);
+    quiz = { items: picked, i: 0, correct: 0, wrong: 0, locked: false };
+    show("screen-quiz");
+    paintQuiz();
+  }
+
+  function paintQuiz() {
+    const item = quiz.items[quiz.i];
+    quiz.locked = false;
+    $("quiz-counter").textContent = `${quiz.i + 1} / ${quiz.items.length}`;
+    $("quiz-track").style.width = `${(quiz.i / quiz.items.length) * 100}%`;
+    $("quiz-badge").textContent = item.field;
+    $("quiz-badge").className = "badge " + item.field;
+    $("quiz-imp").textContent = `重要度 ${item.importance}%`;
+    $("quiz-q").textContent = item.term;
+    $("quiz-explain").textContent = "";
+    $("quiz-next").style.display = "none";
+    $("quiz-next").textContent = quiz.i + 1 >= quiz.items.length ? "結果を見る" : "次へ";
+
+    const same = enabledTerms().filter((t) => t.id !== item.id && t.field === item.field);
+    const rest = enabledTerms().filter((t) => t.id !== item.id);
+    const distractors = shuffle(same.length >= 3 ? same : rest).slice(0, 3);
+    const opts = shuffle([item, ...distractors]);
+    const box = $("quiz-choices");
+    box.innerHTML = "";
+    opts.forEach((opt) => {
+      const b = document.createElement("button");
+      b.className = "choice";
+      b.textContent = opt.def;
+      b.onclick = () => answerQuiz(opt.id === item.id, b, item);
+      box.appendChild(b);
+    });
+  }
+
+  function answerQuiz(ok, btn, item) {
+    if (quiz.locked) return;
+    quiz.locked = true;
+    const c = cardState(item.id);
+    c.seen += 1;
+    c.last = Date.now();
+    state.today.answered += 1;
+    document.querySelectorAll("#quiz-choices .choice").forEach((el) => {
+      el.disabled = true;
+      if (el.textContent === item.def) el.classList.add("ok");
+    });
+    if (ok) {
+      btn.classList.add("ok");
+      quiz.correct += 1;
+      state.today.known += 1;
+      c.knowStreak += 1;
+      c.lastResult = "good";
+      if (c.knowStreak >= 3) c.status = "mastered";
+      else if (c.status === "new") c.status = "learning";
+      $("quiz-explain").textContent = item.tip || "正解";
+    } else {
+      btn.classList.add("ng");
+      quiz.wrong += 1;
+      state.today.weak += 1;
+      c.fail += 1;
+      c.knowStreak = 0;
+      c.lastResult = "weak";
+      c.status = "weak";
+      $("quiz-explain").textContent = "正解は上の緑の選択肢。 " + (item.tip || "");
+    }
+    if (state.lastStudyDay !== dayKey()) {
+      state.streak = state.lastStudyDay ? 1 : Math.max(1, state.streak || 1);
+      state.lastStudyDay = dayKey();
+    }
+    save();
+    $("quiz-next").style.display = "block";
+  }
+
+  function nextQuiz() {
+    quiz.i += 1;
+    if (quiz.i >= quiz.items.length) {
+      session = { known: quiz.correct, weak: quiz.wrong, queue: quiz.items };
+      $("done-known").textContent = quiz.correct;
+      $("done-weak").textContent = quiz.wrong;
+      $("done-total").textContent = quiz.items.length;
+      show("screen-done");
+      renderHome();
+      return;
+    }
+    paintQuiz();
+  }
+
   function openCompare() {
     const item = session.queue[session.i];
     const other = byId[item.pair];
@@ -354,6 +456,9 @@
     $("mode-skim").onclick = () => startMode("skim");
     $("mode-weak").onclick = () => startMode("weak");
     $("mode-drill").onclick = () => startMode("drill");
+    $("mode-quiz").onclick = () => startQuiz();
+    $("btn-quiz-back").onclick = () => { show("screen-home"); renderHome(); };
+    $("quiz-next").onclick = () => nextQuiz();
     $("btn-back").onclick = () => { show("screen-home"); renderHome(); };
     $("btn-weak").onclick = () => grade(false);
     $("btn-good").onclick = () => grade(true);

@@ -1,10 +1,11 @@
-const CACHE = "itpass-memora-v1";
+const CACHE = "itpass-memora-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
   "./data.js",
+  "./data-extra.js",
   "./manifest.json",
   "./icons/icon-180.svg",
   "./icons/icon-512.svg"

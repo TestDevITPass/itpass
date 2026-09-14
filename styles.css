@@ -210,6 +210,19 @@ body {
 .list-item .s { font-size: 12px; color: var(--muted); }
 .tag { font-size: 10px; color: var(--weak); }
 
+.quiz-body { padding: 8px 16px calc(20px + var(--safeb)); overflow: auto; flex: 1; }
+.quiz-q { font-size: 20px; font-weight: 700; line-height: 1.4; margin: 10px 0 16px; }
+.choices { display: flex; flex-direction: column; gap: 8px; }
+.choice {
+  text-align: left; width: 100%;
+  background: var(--card); border: 1px solid var(--line); color: var(--text);
+  border-radius: 14px; padding: 12px 14px; font-size: 14px; line-height: 1.55; cursor: pointer;
+}
+.choice:disabled { cursor: default; }
+.choice.ok { border-color: #3d6b4e; background: #17241c; color: var(--good); }
+.choice.ng { border-color: #6b3d3d; background: #2a1818; color: var(--weak); }
+.quiz-explain { font-size: 13px; color: var(--accent); line-height: 1.6; min-height: 1.6em; }
+
 /* swipe hints */
 .swipe-hint {
   position: absolute; top: 28%; font-size: 13px; font-weight: 700; letter-spacing: .12em;
