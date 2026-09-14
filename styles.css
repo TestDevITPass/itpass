@@ -230,3 +230,12 @@ body {
 }
 .swipe-hint.left { left: 18px; color: var(--weak); border: 1px solid var(--weak); }
 .swipe-hint.right { right: 18px; color: var(--good); border: 1px solid var(--good); }
+
+.tabs { display: flex; gap: 4px; background: var(--bg2); border: 1px solid var(--line); border-radius: 99px; padding: 3px; }
+.tab { border: 0; background: transparent; color: var(--muted); font-size: 12px; padding: 5px 12px; border-radius: 99px; cursor: pointer; }
+.tab.on { background: #2a261c; color: var(--accent); }
+.qimg-wrap { margin: 8px 0 12px; border-radius: 12px; overflow: auto; max-height: 48vh; background: #111; border: 1px solid var(--line); }
+.qimg-wrap img { width: 100%; height: auto; display: block; background: #fff; }
+.k-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.k-choices .choice { text-align: center; font-size: 18px; font-weight: 700; padding: 14px 8px; }
+.ksource { font-size: 11px; color: var(--muted); line-height: 1.5; }

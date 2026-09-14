@@ -19,8 +19,13 @@
     <section class="screen active" id="screen-home">
       <div class="topbar">
         <div class="brand">iパス<span>メモラ</span></div>
+        <div class="tabs">
+          <button class="tab on" id="tab-vocab">用語</button>
+          <button class="tab" id="tab-kakomon">過去問</button>
+        </div>
         <button class="icon-btn" id="btn-settings" aria-label="設定">⚙</button>
       </div>
+      <div id="panel-vocab">
       <div class="hero">
         <h1>忘れる前提で、<br>用語を潰す。</h1>
         <p>Memora X のスワイプ学習を、ITパスポートの頻出用語向けに再構成したホーム画面アプリです。</p>
@@ -67,6 +72,53 @@
         </button>
       </div>
       <div class="hint">今日 <span id="today-ans">0</span> 問 · Safari なら「ホーム画面に追加」できます</div>
+      </div>
+
+      <div id="panel-kakomon" hidden>
+        <div class="hero">
+          <h1>公開問題で<br>単元を潰す。</h1>
+          <p>IPA公開の直近3年分。図表・計算・擬似言語は切り抜き画像です。出典を各問に記載しています。</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="k-done">0</b><span>解いた</span></div>
+          <div class="stat"><b id="k-weak">0</b><span>苦手</span></div>
+          <div class="stat"><b id="k-acc">—</b><span>正答率</span></div>
+        </div>
+        <div class="fields" id="k-years">
+          <button class="chip on" data-year="r8">令和8</button>
+          <button class="chip on" data-year="r7">令和7</button>
+          <button class="chip on" data-year="r6">令和6</button>
+        </div>
+        <div class="fields" id="k-fields">
+          <button class="chip on" data-kfield="ストラテジ">ストラテジ</button>
+          <button class="chip on" data-kfield="マネジメント">マネジメント</button>
+          <button class="chip on" data-kfield="テクノロジ">テクノロジ</button>
+        </div>
+        <div class="fields" id="k-units"></div>
+        <div class="modes">
+          <button class="mode" id="k-mode-unit">
+            <div class="num">01</div>
+            <div class="body"><strong>単元別出題</strong><small>選んだ分野・単元から10問</small></div>
+            <div class="meta"><b id="k-unit-n">0</b>問</div>
+          </button>
+          <button class="mode" id="k-mode-year">
+            <div class="num">02</div>
+            <div class="body"><strong>年度別出題</strong><small>選んだ年度を通しで10問</small></div>
+            <div class="meta"><b id="k-year-n">0</b>問</div>
+          </button>
+          <button class="mode" id="k-mode-review">
+            <div class="num">03</div>
+            <div class="body"><strong>復習問題</strong><small>前回あやしかった過去問</small></div>
+            <div class="meta"><b id="k-rev-n">0</b>問</div>
+          </button>
+          <button class="mode" id="k-mode-weak">
+            <div class="num">04</div>
+            <div class="body"><strong>苦手問題</strong><small>過去問の弱点だけ繰り返す</small></div>
+            <div class="meta"><b id="k-weak-n">0</b>問</div>
+          </button>
+        </div>
+        <div class="hint">用語帳とは別に記録します · 出典：IPA 公開問題</div>
+      </div>
     </section>
 
     <!-- STUDY -->
@@ -173,8 +225,32 @@
       </div>
     </section>
   </div>
+    <section class="screen" id="screen-kquiz">
+      <div class="study-top">
+        <button class="back" id="btn-k-back">←</button>
+        <div class="study-title" id="kquiz-title">過去問</div>
+        <div class="counter" id="kquiz-counter">1 / 10</div>
+      </div>
+      <div class="track"><i id="kquiz-track"></i></div>
+      <div class="quiz-body">
+        <div class="badge-row" style="padding: 8px 4px 0;">
+          <span class="badge" id="kquiz-badge">ストラテジ</span>
+          <span class="imp" id="kquiz-meta"></span>
+        </div>
+        <div class="qimg-wrap" id="kquiz-imgwrap">
+          <img id="kquiz-img" alt="問題画像" />
+        </div>
+        <div class="choices k-choices" id="kquiz-choices"></div>
+        <p class="quiz-explain" id="kquiz-explain"></p>
+        <p class="ksource" id="kquiz-source"></p>
+        <button class="btn good" id="kquiz-next" style="display:none;width:100%;margin-top:12px;">次へ</button>
+      </div>
+    </section>
+
   <script src="./data.js"></script>
   <script src="./data-extra.js"></script>
+  <script src="./kakomon-data.js"></script>
   <script src="./app.js"></script>
+  <script src="./kakomon.js"></script>
 </body>
 </html>
