@@ -1,4 +1,4 @@
-const CACHE = "itpass-memora-v3";
+const CACHE = "itpass-memora-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -7,6 +7,7 @@ const ASSETS = [
   "./kakomon.js",
   "./data.js",
   "./data-extra.js",
+  "./expand.js",
   "./kakomon-data.js",
   "./manifest.json",
   "./icons/icon-180.svg",

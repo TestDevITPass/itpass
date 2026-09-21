@@ -228,6 +228,13 @@ body {
 .choice.ok { border-color: #3d6b4e; background: #17241c; color: var(--good); }
 .choice.ng { border-color: #6b3d3d; background: #2a1818; color: var(--weak); }
 .quiz-explain { font-size: 13px; color: var(--accent); line-height: 1.6; min-height: 1.6em; }
+.expand {
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+  line-height: 1.45;
+}
 
 /* swipe hints */
 .swipe-hint {

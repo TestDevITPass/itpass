@@ -173,6 +173,9 @@
     $("term").textContent = item.term;
     $("reading").textContent = item.reading || "";
     $("cat").textContent = item.category;
+    const full = window.expandOf ? window.expandOf(item) : "";
+    $("expand").textContent = full;
+    $("expand").style.display = full ? "block" : "none";
     $("def").textContent = item.def;
     $("tip").textContent = item.tip || "";
     $("answer").classList.remove("show");
@@ -294,7 +297,8 @@
     $("quiz-badge").textContent = item.field;
     $("quiz-badge").className = "badge " + item.field;
     $("quiz-imp").textContent = `重要度 ${item.importance}%`;
-    $("quiz-q").textContent = item.term;
+    const full = window.expandOf ? window.expandOf(item) : "";
+    $("quiz-q").textContent = full ? `${item.term}（${full}）` : item.term;
     $("quiz-explain").textContent = "";
     $("quiz-next").style.display = "none";
     $("quiz-next").textContent = quiz.i + 1 >= quiz.items.length ? "結果を見る" : "次へ";
